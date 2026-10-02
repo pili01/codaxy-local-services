@@ -1,8 +1,24 @@
 services:
+  smtp4dev-certs:
+    image: alpine/openssl
+    container_name: smtp4dev-certs
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        if [ ! -f /certs/localhost.pfx ]; then
+          openssl req -x509 -newkey rsa:2048 -nodes -days 3650             -keyout /tmp/localhost.key -out /tmp/localhost.crt             -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost,IP:127.0.0.1" &&
+          openssl pkcs12 -export -out /certs/localhost.pfx             -inkey /tmp/localhost.key -in /tmp/localhost.crt -passout pass:devpass
+        fi
+    volumes:
+      - ./smtp4dev-certs:/certs
+
   smtp4dev:
     image: rnwood/smtp4dev
     container_name: smtp4dev
     restart: unless-stopped
+    depends_on:
+      smtp4dev-certs:
+        condition: service_completed_successfully
     ports:
       - "1025:25"
       - "5005:80"

@@ -18,7 +18,7 @@ docker compose up -d --build
 
 ## smtp4dev TLS certificate
 
-`smtp4dev` expects a `localhost.pfx` dev certificate at `smtp4dev-certs/localhost.pfx`
-(password `devpass`, matching `ServerOptions__TlsCertificatePassword` in
-`docker-compose.yml`). That folder is gitignored — each developer provides their own
-local certificate; it isn't included in the repo.
+`smtp4dev` needs a `localhost.pfx` dev certificate (password `devpass`). The one-shot
+`smtp4dev-certs` service in `docker-compose.yml` generates it into `smtp4dev-certs/` on
+`docker compose up` if it's missing, and `smtp4dev` waits for it. Nothing to do manually.
+That folder is gitignored; delete `localhost.pfx` to regenerate it.
