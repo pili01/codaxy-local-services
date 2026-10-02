@@ -24,8 +24,14 @@ export async function POST(req: NextRequest, { params }: { params: { entry: stri
   if (!extTicketNumber || typeof extTicketNumber !== 'string') {
     return NextResponse.json({ error: 'values.EXT_TicketNumber is required' }, { status: 400 });
   }
+  const requestedStart = body?.values?.EXT_RequestedStartDate;
+  const requestedEnd = body?.values?.EXT_RequestedEndDate;
 
-  const ticket = await createTicket(extTicketNumber);
+  const ticket = await createTicket(
+    extTicketNumber,
+    typeof requestedStart === 'string' ? requestedStart : undefined,
+    typeof requestedEnd === 'string' ? requestedEnd : undefined,
+  );
   return NextResponse.json({
     values: {
       'Request ID': ticket.requestId,

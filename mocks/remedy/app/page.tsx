@@ -17,11 +17,16 @@ type Ticket = {
 };
 
 const STATUS_OPTIONS = [
+  'Request For Authorzation',
+  'Request For Change',
+  'Planning in Progress',
+  'Scheduled For Review',
+  'Scheduled For Approval',
   'Scheduled',
-  'Implementation In Progress',
+  'Implementation in Progress',
   'Completed',
+  'Closed',
   'Cancelled',
-  'Rejected for Authorization',
 ];
 
 export default function Home() {
@@ -46,6 +51,15 @@ export default function Home() {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'setStatus', status }),
+    });
+    load();
+  }
+
+  async function setCompletionOutcome(requestId: string, status: string, reason: string) {
+    await fetch(`/api/tickets/${requestId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'setStatus', status, reason }),
     });
     load();
   }
@@ -114,6 +128,15 @@ export default function Home() {
                     </option>
                   ))}
                 </select>{' '}
+                {(t.status === 'Completed' || t.status === 'Closed') && (
+                  <select
+                    value={t.statusReason === 'Unsuccessful' ? 'Unsuccessful' : 'Successful'}
+                    onChange={(e) => setCompletionOutcome(t.requestId, t.status, e.target.value)}
+                  >
+                    <option value="Successful">Successful</option>
+                    <option value="Unsuccessful">Unsuccessful</option>
+                  </select>
+                )}{' '}
                 <button onClick={() => removeTicket(t.requestId)}>Delete</button>
               </td>
             </tr>
