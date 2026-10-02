@@ -1,0 +1,26 @@
+services:
+  smtp4dev:
+    image: rnwood/smtp4dev
+    container_name: smtp4dev
+    restart: unless-stopped
+    ports:
+      - "1025:25"
+      - "5005:80"
+    volumes:
+      - ./smtp4dev-certs:/certs
+    environment:
+      ServerOptions__TlsMode: "StartTls"
+      ServerOptions__TlsCertificate: "/certs/localhost.pfx"
+      ServerOptions__TlsCertificatePassword: "devpass"
+      ServerOptions__AuthenticationRequired: "true"
+      ServerOptions__SmtpAllowAnyCredentials: "true"
+
+  remedy-mock:
+    build:
+      context: ./mocks/remedy
+    container_name: remedy-mock
+    restart: unless-stopped
+    ports:
+      - "40230:8080"
+    volumes:
+      - ./mocks/remedy/data:/app/data

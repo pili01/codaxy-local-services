@@ -1,0 +1,5 @@
+smtp4dev-certs/*
+!smtp4dev-certs/.gitkeep
+
+mocks/remedy/data/*
+!mocks/remedy/data/.gitkeep
