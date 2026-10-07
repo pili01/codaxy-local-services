@@ -16,9 +16,8 @@ docker compose up -d --build
 - **smtp4dev** — catches outgoing emails from the portal in dev instead of sending them
   for real. UI at http://localhost:5005.
 
-## smtp4dev TLS certificate
+## smtp4dev and TLS
 
-`smtp4dev` needs a `localhost.pfx` dev certificate (password `devpass`). The one-shot
-`smtp4dev-certs` service in `docker-compose.yml` generates it into `smtp4dev-certs/` on
-`docker compose up` if it's missing, and `smtp4dev` waits for it. Nothing to do manually.
-That folder is gitignored; delete `localhost.pfx` to regenerate it.
+`smtp4dev` runs without TLS (`TlsMode: None`), so no certificate is needed. The portal's
+`appsettings.Development.json` sets `Smtp:UseTls` to `false` to match. Never set that in
+a deployed environment — `UseTls` defaults to `true` (STARTTLS).
