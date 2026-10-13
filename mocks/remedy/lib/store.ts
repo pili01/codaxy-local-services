@@ -169,8 +169,8 @@ export function readAll(): Promise<Ticket[]> {
 
 export function createTicket(
   extTicketNumber: string,
-  requestedStart?: string,
-  requestedEnd?: string,
+  scheduledStart?: string,
+  scheduledEnd?: string,
 ): Promise<Ticket> {
   return serialize(async () => {
     const tickets = await readAllRaw();
@@ -178,16 +178,16 @@ export function createTicket(
     if (existing) return existing;
 
     const now = new Date();
-    // Fall back to a synthetic window when the caller didn't send requested dates
-    // (e.g. manual curl testing) — the real portal always sends EXT_RequestedStartDate/EndDate.
+    // Fall back to a synthetic window when the caller didn't send scheduled dates
+    // (e.g. manual curl testing) — the real portal always sends EXT_ScheduledStartDate/EndDate.
     const fallbackStart = new Date(now.getTime() + 24 * 60 * 60 * 1000);
     const fallbackEnd = new Date(fallbackStart.getTime() + 15 * 60 * 1000);
     const ticket: Ticket = {
       requestId: makeRequestId(tickets),
       extTicketNumber,
       crqNumber: makeCrqNumber(tickets),
-      scheduledStart: requestedStart || fallbackStart.toISOString(),
-      scheduledEnd: requestedEnd || fallbackEnd.toISOString(),
+      scheduledStart: scheduledStart || fallbackStart.toISOString(),
+      scheduledEnd: scheduledEnd || fallbackEnd.toISOString(),
       status: 'Scheduled',
       statusReason: STATUS_REASON_DEFAULTS.Scheduled,
       actualStart: '',
