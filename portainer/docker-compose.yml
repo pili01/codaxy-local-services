@@ -14,7 +14,8 @@ services:
 
   fndd-helix-mock:
     build:
-      context: ./mocks/remedy
+      context: ../mocks/remedy
+    pull_policy: build
     container_name: fndd-helix-mock
     restart: unless-stopped
     ports:
