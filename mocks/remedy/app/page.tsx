@@ -70,8 +70,8 @@ export default function Home() {
   }
 
   return (
-    <main style={{ fontFamily: 'sans-serif', padding: 24, color: '#111' }}>
-      <h1>Remedy mock — change tickets</h1>
+    <main style={{ fontFamily: 'sans-serif', padding: '72px 24px 24px', color: '#111' }}>
+      <h1 data-builder-anchor>Remedy mock — change tickets</h1>
       <p>
         A ticket shows up here as soon as the portal sends a Create request (any ticket
         GUID works — nothing hardcoded), with a CRQ number already assigned so the
