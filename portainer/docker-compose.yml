@@ -1,0 +1,26 @@
+services:
+  fndd-smtp4dev:
+    image: rnwood/smtp4dev
+    container_name: smtp4dev
+    restart: unless-stopped
+    ports:
+      - "1025:25"
+      - "5005:80"
+    environment:
+      ServerOptions__TlsMode: "StartTls"
+      ServerOptions__HostName: "fndd-smtp4dev"
+      ServerOptions__AuthenticationRequired: "true"
+      ServerOptions__SmtpAllowAnyCredentials: "true"
+
+  fndd-helix-mock:
+    build:
+      context: ./mocks/remedy
+    container_name: fndd-helix-mock
+    restart: unless-stopped
+    ports:
+      - "40230:8080"
+    volumes:
+      - remedy-mock-data:/app/data
+
+volumes:
+  remedy-mock-data:
