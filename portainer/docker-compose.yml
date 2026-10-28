@@ -11,6 +11,8 @@ services:
       ServerOptions__HostName: "local.idna"
       ServerOptions__AuthenticationRequired: "true"
       ServerOptions__SmtpAllowAnyCredentials: "true"
+    volumes:
+      - smtp4dev-data:/smtp4dev
 
   fndd-helix-mock:
     build:
@@ -25,3 +27,4 @@ services:
 
 volumes:
   remedy-mock-data:
+  smtp4dev-data:
