@@ -17,7 +17,7 @@ type Ticket = {
 };
 
 const STATUS_OPTIONS = [
-  'Request For Authorzation',
+  'Request For Authorization',
   'Request For Change',
   'Planning in Progress',
   'Scheduled For Review',

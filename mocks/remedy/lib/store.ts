@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 
 export type ChangeStatus =
-  | 'Request For Authorzation'
+  | 'Request For Authorization'
   | 'Request For Change'
   | 'Planning in Progress'
   | 'Scheduled For Review'
@@ -45,7 +45,7 @@ const DATA_DIR = path.join(process.cwd(), 'data');
 const DATA_FILE = path.join(DATA_DIR, 'tickets.csv');
 
 export const STATUS_OPTIONS: ChangeStatus[] = [
-  'Request For Authorzation',
+  'Request For Authorization',
   'Request For Change',
   'Planning in Progress',
   'Scheduled For Review',
@@ -58,7 +58,7 @@ export const STATUS_OPTIONS: ChangeStatus[] = [
 ];
 
 const STATUS_REASON_DEFAULTS: Record<string, string> = {
-  'Request For Authorzation': 'Awaiting CAB authorization',
+  'Request For Authorization': 'Awaiting CAB authorization',
   'Request For Change': 'Change request submitted',
   'Planning in Progress': 'Change plan being prepared',
   'Scheduled For Review': 'Awaiting CAB review',
